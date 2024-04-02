@@ -1,0 +1,22 @@
+version: "2.0"
+services:
+  transmission:
+    image: linuxserver/transmission
+    hostname: transmission
+    container_name: transmission
+    environment:
+      - PUID=1000 # User id
+      - PGID=1000 # Group id
+      - TZ=Europe/Moscow # Your current timezone
+      - USER=user
+      - PASS=password
+      - WHITELIST=192.168.1.1,192.168.1.2
+    volumes:
+      - /srv/docker/config/transmission:/config # Change this to your docker config folder
+      - /srv/download:/download # Change this to your download folder
+      - /srv/watch:/watch
+    ports:
+      - 9091:9091 # Web UI port
+      - 51413:51413 # Torrent port (TCP)
+      - 51413:51413/udp # Torrent port (UDP)
+    restart: unless-stopped # This makes sure that the application restarts when it crashes

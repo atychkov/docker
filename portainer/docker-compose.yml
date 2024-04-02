@@ -1,0 +1,15 @@
+version: "3"
+services:
+  portainer:
+    image: portainer/portainer
+    container_name: portainer
+    environment:
+      - TZ=Europe/Moscow
+    ports:
+      - 9443:9443
+    volumes:
+        - data:/srv/docker/portainer
+        - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+volumes:
+  data:
