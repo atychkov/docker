@@ -1,0 +1,18 @@
+version: '3.9'
+
+services:
+  grafana:
+    image: grafana/grafana
+    user: root
+    ports:
+      - 3000:3000
+    volumes:
+      - /srv/docker/config/grafana:/var/lib/grafana
+      - /srv/docker/config/grafana/provisioning/:/etc/grafana/provisioning/
+    container_name: grafana
+    hostname: grafana
+    restart: unless-stopped
+    environment:
+      TZ: "Europe/Moscow"
+    networks:
+      - default

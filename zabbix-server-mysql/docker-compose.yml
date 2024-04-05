@@ -56,6 +56,27 @@ services:
       - zabbix-mariadb
       - zabbix-server
 
+  zabbix-agent:
+    image: zabbix/zabbix-agent
+    container_name: zabbix-agent
+    hostname: zabbix-server
+    restart: unless-stopped
+    environment:
+      ZBX_SERVER_HOST: zabbix-server
+      ZBX_LOGREMOTECOMMANDS: 0
+      ZBX_BUFFERSIZE: 100
+    ports:
+      - 10050:10050
+    networks:
+      - default
+    labels:
+      com.zabbix.description: "Zabbix agent"
+      com.zabbix.company: "Zabbix LLC"
+      com.zabbix.component: "zabbix-agentd"
+      com.zabbix.os: "alpine"
+    depends_on:
+      - zabbix-server
+
 networks:
   default:
     ipam:
